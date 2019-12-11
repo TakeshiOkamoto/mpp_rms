@@ -15,8 +15,8 @@ rms = Request Management System
    
 ## 1. 環境
 ・Ruby 2.6.5  
-・Rails 6.0.1  
-・MariaDB 10.2.2以上(MySQL5.5.8以上でも可)  
+・Rails 6.0.1 (2019/11/5版)  
+・MariaDB 10.2.2以上 (MySQL5.5.8以上でも可)  
  
  
 ## 2. インストール方法
