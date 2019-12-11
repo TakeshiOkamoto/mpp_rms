@@ -1,6 +1,9 @@
 # ご依頼管理システム
-Ruby on Railsの練習用に作成したものです。 [DEMO](https://www.petitmonte.com/rails-demo/rms) ※デモ用に最小メモリ構成(50-100MB)。
-  
+Ruby on Railsの練習用に作成したものです。 
+
+DEMO  ※デモ用に最小メモリ構成(50-100MB)。  
+[https://www.petitmonte.com/rails-demo/rms](https://www.petitmonte.com/rails-demo/rms)  
+    
 Railsはメモリ食べ過ぎなので、サーバーのメモリ節約の為に1つのプロジェクト内に複数プロジェクトを混在できる設計になっています。その為、モデル名がUserであるべき所がRmsUserなどになっています。
 
 ```rb
