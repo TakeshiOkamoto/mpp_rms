@@ -60,4 +60,5 @@ exit
 
 ## 3. Rails6プロジェクトの各種初期設定
 その他は次の記事を参照してください。  
+  
 [Rails6プロジェクトの各種初期設定](https://www.petitmonte.com/ruby/rails6_project.html)  
