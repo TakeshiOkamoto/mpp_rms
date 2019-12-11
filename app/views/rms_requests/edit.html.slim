@@ -1,0 +1,28 @@
+- provide(:title, 'ご依頼 - 編集')
+- provide(:submit, '更新する')
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item =link_to("ご依頼", rms_requests_path)     
+    li.breadcrumb-item.active aria-current="page" = '編集'
+    
+p
+h1 ご依頼の編集
+p
+
+== render 'form'
+
+br
+br
+
+= raw '<a href="#" onClick="history.back(); return false;">戻る</a>'
+p
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item =link_to("ご依頼", rms_requests_path)     
+    li.breadcrumb-item.active aria-current="page" = '編集'
+    
+p    

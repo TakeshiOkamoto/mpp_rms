@@ -1,0 +1,140 @@
+= form_with model: @rms_request, local: true do |f|
+  - if @rms_request.errors.any?
+  #error_explanation.text-danger
+      ul
+        - @rms_request.errors.full_messages.each do |message|
+          li = message
+
+  div.alert.alert-primary 1. 基本情報
+
+  .form-group
+    = raw '<label for="rms_request_client_id">顧客</label>&nbsp;&nbsp;<span class="badge badge-success" style="font-size:16px;"> 必須 </span>' +"\n"  
+    br
+    = raw '<select name="rms_request[client_id]" id="rms_request_client_id">' +"\n" 
+    = raw '<option value="">選択して下さい。</option>' +"\n" 
+    - @rms_clients_list.each do |obj|
+      - if (params[:client_id] ==  obj[1].to_s())
+        = raw '<option value="' + obj[1].to_s()  +'" selected="selected">' + h(obj[0]) +'</option>' +"\n"    
+      - else
+        - if (@rms_request.client_id ==  obj[1])
+          = raw '<option value="' + obj[1].to_s()  +'" selected="selected">' + h(obj[0]) +'</option>' +"\n"     
+        - else
+          = raw '<option value="' + obj[1].to_s()  +'">' + h(obj[0]) +'</option>' +"\n"       
+        
+    = raw '</select>' +"\n" 
+    = raw '&nbsp;&nbsp;<input placeholder="名前" id="search_name" type="text" style="width:135px;" />'
+    = raw '&nbsp;&nbsp;<button onclick="search_run();return false;">検索</button>'
+
+  / 顧客リストの検索
+  = raw '<script>' + "\n"
+  = raw 'function search_run(){'  + "\n"
+  = raw '' + "\n"
+  = raw '  // 空白の除去' + "\n"
+  = raw '  var search_name = document.getElementById("search_name");' + "\n"
+  = raw '  search_name.value = search_name.value.trim();' + "\n"
+  = raw '  if(search_name.value == "") return;    ' + "\n"
+  = raw '' + "\n"  
+  = raw '  var rms_request_client_id = document.getElementById("rms_request_client_id");'   + "\n"
+  = raw '' + "\n"
+  = raw '  for (i=0; i<rms_request_client_id.length; i++) {' + "\n"
+  = raw '' + "\n"
+  = raw '    // 文字列が含まれる場合' + "\n"
+  = raw '    if (rms_request_client_id[i].text.indexOf(search_name.value) != -1) {' + "\n"
+  = raw '      rms_request_client_id.selectedIndex = i' + "\n"
+  = raw '      break;' + "\n"
+  = raw '    }' + "\n"
+  = raw '  }' + "\n"            
+  = raw '}' + "\n"
+  = raw '</script>' + "\n"
+
+  .form-group
+    = raw '<label for="rms_request_types">' + RmsRequest.human_attribute_name(:types) +'</label>'    
+    = raw '&nbsp;&nbsp;' + '<span class="badge badge-success" style="font-size:16px;"> 必須 </span><br>'   
+    - if @rms_request.types.present?    
+      = f.select :types, options_for_select(@rms_types_list,@rms_request.types),include_blank: '選択して下さい。',id: 'rms_request_types'
+    - else
+      = f.select :types, options_for_select(@rms_types_list),include_blank: '選択して下さい。',id: 'rms_request_types'
+    
+  .form-group
+    = raw '<label for="rms_request_title">' + RmsRequest.human_attribute_name(:title) +'</label>'    
+    = raw '&nbsp;&nbsp;' + '<span class="badge badge-success" style="font-size:16px;"> 必須 </span>'   
+    = f.text_field :title, class: 'form-control',  placeholder: "ご依頼のタイトルを一行で入力。",id: 'rms_request_title'
+         
+  .form-group
+    = raw '<label for="rms_request_yyyy">' + RmsRequest.human_attribute_name(:yyyy) +'</label>'    
+    = raw '&nbsp;&nbsp;' + '<span class="badge badge-success" style="font-size:16px;"> 必須 </span>'   
+    = f.number_field :yyyy, class: 'form-control',  placeholder: "2000",id: 'rms_request_yyyy'
+  .form-group
+    = raw '<label for="rms_request_mm">' + RmsRequest.human_attribute_name(:mm) +'</label>'    
+    = raw '&nbsp;&nbsp;' + '<span class="badge badge-success" style="font-size:16px;"> 必須 </span>'   
+    = f.number_field :mm, class: 'form-control', placeholder: "11",id: 'rms_request_mm'
+  .form-group
+    = raw '<label for="rms_request_dd">' + RmsRequest.human_attribute_name(:dd) +'</label>'    
+    = raw '&nbsp;&nbsp;' + '<span class="badge badge-success" style="font-size:16px;"> 必須 </span>'   
+    = f.number_field :dd, class: 'form-control', placeholder: "28",id: 'rms_request_dd'
+  .field
+    = raw '<label for="rms_request_day_times">' + RmsRequest.human_attribute_name(:day_times) +'</label>'    
+    = raw '&nbsp;&nbsp;' + '<span class="badge badge-success" style="font-size:16px;"> 必須 </span>'
+    = f.number_field :day_times,  class: 'form-control',placeholder: "電話相談は分単位。それ以外は日数。(例) 1泊2日は2とする。" ,id: 'rms_request_day_times' 
+  
+  p
+  div.alert.alert-primary 2. 売上 (円単位)
+  p
+  
+  .form-group
+    = f.label :sales 
+    = f.number_field :sales, class: 'form-control', id: 'rms_request_sales'
+
+  p
+  div.alert.alert-primary 3. 経費 (円単位)
+  p
+  
+  .form-group
+    = f.label :expense1 
+    = f.number_field :expense1, class: 'form-control', id: 'rms_request_expense1'
+  .form-group
+    = f.label :expense2 
+    = f.number_field :expense2, class: 'form-control', id: 'rms_request_expense2'      
+  .form-group
+    = f.label :expense3 
+    = f.number_field :expense3, class: 'form-control', id: 'rms_request_expense3'      
+  .form-group
+    = f.label :expense4 
+    = f.number_field :expense4, class: 'form-control', id: 'rms_request_expense4'      
+  .form-group
+    = f.label :expense5 
+    = f.number_field :expense5, class: 'form-control', id: 'rms_request_expense5'            
+  .form-group
+    = f.label :expense6 
+    = f.number_field :expense6, class: 'form-control', id: 'rms_request_expense6'
+  .form-group
+    = f.label :expense7
+    = f.number_field :expense7, class: 'form-control', id: 'rms_request_expense7'      
+  .form-group
+    = f.label :expense8 
+    = f.number_field :expense8, class: 'form-control', id: 'rms_request_expense8'      
+  .form-group
+    = f.label :expense9 
+    = f.number_field :expense9, class: 'form-control', id: 'rms_request_expense9'      
+  .form-group
+    = f.label :expense10 
+    = f.number_field :expense10, class: 'form-control', id: 'rms_request_expense10' 
+
+  p
+  div.alert.alert-primary 4. ご依頼内容
+  p
+  
+  .form-group
+    = f.label :content
+    = f.text_area :content, rows: 10, class: 'form-control', id: 'rms_request_content'  , placeholder: "ここにご依頼の内容を記述します。"  
+     
+  p
+  div.alert.alert-primary 5. 備考
+  p
+       
+  .form-group
+    = f.label :remarks
+    = f.text_area :remarks, rows: 5, class: 'form-control', id: 'rms_request_remarks'  , placeholder: "ここに備考を記述します。"
+  
+  br  
+  = f.submit yield(:submit), class: 'btn btn-primary'  

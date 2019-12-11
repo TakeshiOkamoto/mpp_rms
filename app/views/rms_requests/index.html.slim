@@ -1,0 +1,89 @@
+- provide(:title, ' ご依頼')
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item.active aria-current="page" = 'ご依頼'
+    
+p
+h1 ご依頼
+p
+
+= link_to 'ご依頼の新規登録', new_rms_request_path,class: 'btn btn-primary'  
+p
+    
+div.pc
+  table.table.table-hover
+    thead.thead-default
+      tr
+        th style="width:180px;" = "一覧"
+        th
+        th
+
+    tbody
+      - @rms_requests.each do |request|
+        / 経費の合計
+        - expense = rms_get_expense_total(request)    
+        tr
+          td = link_to(request.yyyy.to_s + "年" + sprintf("%02d月",request.mm) + sprintf("%02d日",request.dd) +  \ 
+                "(" + common_get_week(request.yyyy,request.mm,request.dd) + ")", request) + " "
+          td 
+            div
+              span.text-secondary = rms_get_clients_from_id(request.client_id)
+              span.text-secondary style="font-size:90%"  =  " さん" 
+              span.text-secondary = " <" +rms_get_types_from_id(request.types) +">"                                    
+                                     
+            div = request.title  
+            div.text-success         
+              = "売上 " + request.sales.to_s(:delimited) + "円"  + \
+               " 経費 " + expense.to_s(:delimited) + "円"  + \
+               " 営業利益 " + (request.sales - expense).to_s(:delimited) + "円"  
+
+          td
+            span = link_to '編集', edit_rms_request_path(request), class: 'btn btn-primary' 
+            span = raw "&nbsp;&nbsp;&nbsp;"
+            - days = Time.parse(request.day.to_s()).strftime("%Y年%m月%d日")
+            span = link_to '削除', request, data: { confirm: "\n#{days}\n#{request.title}\nのご依頼を削除します。よろしいですか？" }, method: :delete, class: 'btn btn-danger'  
+
+            
+div.sp
+  table.table.table-hover
+    thead.thead-default
+      tr
+        th = "一覧"
+
+    tbody
+      - @rms_requests.each do |request|
+        / 経費の合計
+        - expense = rms_get_expense_total(request)    
+        tr
+          td 
+            div
+              span = link_to(request.yyyy.to_s + "年" + sprintf("%02d月",request.mm) + sprintf("%02d日",request.dd) +  \
+                     "(" + common_get_week(request.yyyy,request.mm,request.dd) + ")", request)
+              br       
+              span.text-secondary = rms_get_clients_from_id(request.client_id)
+              span.text-secondary style="font-size:90%"  =  " さん" 
+              span.text-secondary = " <" +rms_get_types_from_id(request.types) +">"                                    
+                                     
+            div = request.title  
+            div.text-success         
+              = "売上 " + request.sales.to_s(:delimited) + "円"  + \
+               " 経費 " + expense.to_s(:delimited) + "円"  + \
+               " 営業利益 " + (request.sales - expense).to_s(:delimited) + "円"  
+
+p
+
+/ ページネーション
+.mb-3
+  = paginate @rms_requests
+  = page_entries_info @rms_requests
+
+p  
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item.active aria-current="page" = 'ご依頼'
+    
+p    

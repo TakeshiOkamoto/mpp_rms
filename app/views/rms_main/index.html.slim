@@ -1,0 +1,43 @@
+- provide(:title, t('contents.title'))
+
+
+.mb-3
+p
+- if @request_data.blank?
+  br
+  p データが未登録です。
+
+- @request_data.each do |obj|
+  h2 =obj[0].yyyy.to_s() +"年"
+
+  table.table.table-hover
+    thead.thead-default
+      tr
+        th style="width:120px;" = "月"
+        th style="width:120px;" = "売上"
+        th style="width:120px;" = "経費"
+        th style="width:120px;" = raw '<span class="pc">営業</span>利益'
+        th= raw '件<span class="pc">数</span>'        
+    tbody     
+      - cnt_total = 0
+      - sales_total = 0
+      - expense_total = 0
+      - obj.each do |col|    
+        - cnt_total += col.cnt      
+        - sales_total += col.sales_total
+        - expense_total += col.expense_total      
+        tr
+          td = sprintf("%02d",col.mm)
+          td = col.sales_total.to_s(:delimited)
+          td = col.expense_total.to_s(:delimited)
+          td = (col.sales_total - col.expense_total).to_s(:delimited)    
+          td = col.cnt.to_s(:delimited)     
+  p.text-success = "合計：売上 " + sales_total.to_s(:delimited) + "円"  + \
+                   " 経費 " + expense_total.to_s(:delimited) + "円"  + \
+                   " 営業利益 " + (sales_total - expense_total).to_s(:delimited) + "円" + \
+                   " ご依頼 " + cnt_total.to_s(:delimited) + "件" 
+     
+- if @request_data.present?
+  br
+  br
+  = link_to 'CSVをエクスポート', root_path(format: :csv), class: 'btn btn-primary mb-5'

@@ -1,0 +1,31 @@
+= form_with model: @rms_client, local: true do |f|
+  - if @rms_client.errors.any?
+    #error_explanation.text-danger
+      ul
+        - @rms_client.errors.full_messages.each do |message|
+          li = message
+
+  .form-group
+    = raw '<label for="rms_client_name">' + RmsClient.human_attribute_name(:name) +'</label>'
+    = raw '&nbsp;&nbsp;' + '<span class="badge badge-success" style="font-size:16px;"> 必須 </span>'
+    = f.text_field :name, class: 'form-control', id: 'rms_client_name', placeholder: "山田太郎"
+  .form-group
+    = f.label :tel
+    = f.text_field :tel, class: 'form-control', id: 'rms_client_tel', placeholder: "0120-01-2345"
+  .form-group
+    = f.label :email
+    = f.email_field :email, class: 'form-control', id: 'rms_client_email' , placeholder: "info@example.com"   
+  .form-group
+    = f.label :address1
+    = f.text_field :address1, class: 'form-control', id: 'rms_client_address1' , placeholder: "東京都"      
+  .form-group
+    = f.label :address2
+    = f.text_field :address2, class: 'form-control', id: 'rms_client_address2' , placeholder: "千代田区"     
+  .form-group
+    = f.label :address3
+    = f.text_field :address3, class: 'form-control', id: 'rms_client_address3'  , placeholder: "千代田1-1"     
+  .form-group
+    = f.label :info
+    = f.text_area :info, rows: 5, class: 'form-control', id: 'rms_client_info'  , placeholder: "ここに基本的な情報を記述します。"          
+
+  = f.submit yield(:submit) , class: 'btn btn-primary'  

@@ -1,0 +1,92 @@
+- provide(:title, '顧客')
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item.active aria-current="page" = '顧客'
+    
+p
+h1 顧客
+p
+
+= search_form_for @q, class: 'mb-5' do |f|
+  .form-group.row
+    .col-sm-10
+      = f.search_field :name_cont, class: 'form-control', placeholder: "検索したい名前を入力します。"   
+  .form-group
+    = f.submit class: 'btn btn-outline-primary'
+
+
+= link_to '顧客の新規登録', new_rms_client_path,class: 'btn btn-primary'  
+p
+
+div.pc    
+  table.table.table-hover
+    thead.thead-default
+      tr
+        th style="width:170px;"  = "一覧"
+        th
+        th
+
+    tbody
+      - @rms_clients.each_with_index do |client,i|
+        - obj = rms_get_requests_total_data(client.id)
+        tr
+          td  
+           span = link_to(client.name, client)
+           span style="font-size:90%" = " さん"         
+          td 
+            div            
+              - if client.address1.present?
+                span.pc
+                  span.text-secondary = " <" + client.address1 + ">"
+              
+            - if obj["cnt"] > 0
+              div = "ご依頼 " + obj["cnt"].to_s()  +"件" + " 最終ご依頼日 " + Time.parse(obj["lastday"].to_s()).strftime("%Y年%m月%d日")
+            - else
+              div = "ご依頼 " + obj["cnt"].to_s()  +"件"
+            - if obj["cnt"] > 0            
+              div.text-success = "合計：売上 " + obj["sales_total"].to_s(:delimited) + "円"  + \
+                                 " 経費 " + obj["expense_total"].to_s(:delimited) + "円"  + \
+                                 " 営業利益 " + (obj["sales_total"] - obj["expense_total"]).to_s(:delimited) + "円"    
+          td
+            span = link_to '編集', edit_rms_client_path(client), class: 'btn btn-primary' 
+            span = raw "&nbsp;&nbsp;&nbsp;"
+            span = link_to '削除', client, data: { confirm: "\n#{client.name} さんを削除します。\nご依頼の履歴がある場合は同時に削除されます。\nよろしいですか？" }, method: :delete, class: 'btn btn-danger' 
+
+div.sp    
+  table.table.table-hover
+    thead.thead-default
+      tr
+        th = "一覧"
+    tbody
+      - @rms_clients.each_with_index do |client,i|
+        - obj = rms_get_requests_total_data(client.id)
+        tr
+          td 
+            div    
+              span = link_to(client.name, client)
+              span style="font-size:90%" = " さん"                       
+              - if obj["cnt"] > 0
+                div = "ご依頼 " + obj["cnt"].to_s()  +"件" + " 最終ご依頼日 " + Time.parse(obj["lastday"].to_s()).strftime("%Y年%m月%d日")
+              - else
+                div = "ご依頼 " + obj["cnt"].to_s()  +"件"
+              - if obj["cnt"] > 0            
+                div.text-success = "合計：売上 " + obj["sales_total"].to_s(:delimited) + "円"  + \
+                                   " 経費 " + obj["expense_total"].to_s(:delimited) + "円"  + \
+                                   " 営業利益 " + (obj["sales_total"] - obj["expense_total"]).to_s(:delimited) + "円"    
+p
+
+/ ページネーション
+.mb-3
+  = paginate @rms_clients
+  = page_entries_info @rms_clients
+  
+p  
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item.active aria-current="page" = '顧客'
+
+p      

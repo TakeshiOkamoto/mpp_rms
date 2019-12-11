@@ -1,0 +1,99 @@
+- provide(:title, '顧客 - 表示')
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item =link_to("ご依頼", rms_requests_path)     
+    li.breadcrumb-item.active aria-current="page" = '表示'
+
+p
+h2 
+  = @rms_request.yyyy.to_s + "年" + sprintf("%02d月",@rms_request.mm) + sprintf("%02d日",@rms_request.dd) + \
+    "(" + common_get_week(@rms_request.yyyy,@rms_request.mm,@rms_request.dd) + ")" 
+  br  
+  = @rms_request.title
+p
+
+/ 経費の合計
+- expense = rms_get_expense_total(@rms_request)
+
+div.text-success = "売上 " + @rms_request.sales.to_s(:delimited) + "円"  + \
+     " 経費 " + expense.to_s(:delimited) + "円"  + \
+     " 営業利益 " + (@rms_request.sales - expense).to_s(:delimited) + "円"  
+
+
+.mb-3
+table.table.table-hover
+  tr
+    th style = "width:150px;" = RmsRequest.human_attribute_name(:client_id)
+    td = link_to rms_get_clients_from_id(@rms_request.client_id),   rms_client_path(@rms_request.client_id)   
+  tr
+    th =RmsRequest.human_attribute_name(:types)
+    td = rms_get_types_from_id(@rms_request.types)    
+  tr
+    th =RmsRequest.human_attribute_name(:day_times)
+    - if @rms_request.types == 2
+      td = @rms_request.day_times.to_s + "分"       
+    - else  
+      td = @rms_request.day_times.to_s + "日"       
+  tr
+    th =RmsRequest.human_attribute_name(:sales)
+    td = @rms_request.sales.to_s(:delimited) + "円"       
+  tr
+    th =RmsRequest.human_attribute_name(:expense1)
+    td = @rms_request.expense1.to_s(:delimited) + "円"        
+  tr
+    th =RmsRequest.human_attribute_name(:expense2)
+    td = @rms_request.expense2.to_s(:delimited)  + "円"       
+  tr
+    th =RmsRequest.human_attribute_name(:expense3)
+    td = @rms_request.expense3.to_s(:delimited)  + "円"       
+  tr
+    th =RmsRequest.human_attribute_name(:expense4)
+    td = @rms_request.expense4.to_s(:delimited) + "円"        
+  tr
+    th =RmsRequest.human_attribute_name(:expense5)
+    td = @rms_request.expense5.to_s(:delimited)  + "円"       
+  tr
+    th =RmsRequest.human_attribute_name(:expense6)
+    td = @rms_request.expense6.to_s(:delimited) + "円"  
+  tr
+    th =RmsRequest.human_attribute_name(:expense7)
+    td = @rms_request.expense7.to_s(:delimited)  + "円"       
+  tr
+    th =RmsRequest.human_attribute_name(:expense8)
+    td = @rms_request.expense8.to_s(:delimited)  + "円"       
+  tr
+    th =RmsRequest.human_attribute_name(:expense9)
+    td = @rms_request.expense9.to_s(:delimited)  + "円"                                         
+  tr
+    th =RmsRequest.human_attribute_name(:expense10)
+    td = @rms_request.expense10.to_s(:delimited)  + "円"
+  tr
+    th =RmsRequest.human_attribute_name(:content)
+    td = raw common_convert_nbsp(auto_link(simple_format(h(@rms_request.content), {}, sanitize: false, wrapper_tag: "p")))
+  tr
+    th =RmsRequest.human_attribute_name(:remarks)
+    td = raw common_convert_nbsp(auto_link(simple_format(h(@rms_request.remarks), {}, sanitize: false, wrapper_tag: "p")))    
+
+br
+
+div
+  div.float-right
+    span = link_to '編集', edit_rms_request_path(@rms_request), class: 'btn btn-primary' 
+    span = raw "&nbsp;&nbsp;&nbsp;"
+    - days = @rms_request.yyyy.to_s + "年" + sprintf("%02d月",@rms_request.mm) + sprintf("%02d日",@rms_request.dd)
+    span = link_to '削除', @rms_request, data: { confirm: "\n#{days}\n#{@rms_request.title}\nのご依頼を削除します。よろしいですか？" }, method: :delete, class: 'btn btn-danger'      
+  div.float-left
+    = raw '<a href="#" onClick="history.back(); return false;">戻る</a>'
+div.clearfix  
+
+p
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item =link_to("ご依頼", rms_requests_path)     
+    li.breadcrumb-item.active aria-current="page" = '表示'
+    
+p    

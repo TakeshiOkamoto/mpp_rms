@@ -1,0 +1,27 @@
+- provide(:title, 'ご依頼 - 新規登録')
+- provide(:submit, '登録する')
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item =link_to("ご依頼", rms_requests_path)     
+    li.breadcrumb-item.active aria-current="page" = '新規作成'
+    
+p
+h1 新規登録 - ご依頼
+p
+
+== render 'form'
+
+br
+br
+= raw '<a href="#" onClick="history.back(); return false;">戻る</a>'
+p
+
+nav aria-label="breadcrumb"
+  ol.breadcrumb
+    li.breadcrumb-item =link_to("ホーム", root_path) 
+    li.breadcrumb-item =link_to("ご依頼", rms_requests_path)     
+    li.breadcrumb-item.active aria-current="page" = '新規作成'
+    
+p    
