@@ -19,8 +19,11 @@ rms = Request Management System
  
  
 ## 2. インストール方法
-私のメモ用に書いておきます。
-
+私のメモ用に書いておきます。  
+  
+### database.yml  
+config/database.ymlでデータベース設定を行います。  
+  
 ### bundle  
 ```rb
 bundle install 
