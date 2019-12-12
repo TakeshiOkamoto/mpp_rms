@@ -6,7 +6,7 @@ DEMO  ※デモ用に最小メモリ構成(50-100MB)。
     
 Railsはメモリ食べ過ぎなので、サーバーのメモリ節約の為に1つのプロジェクト内に複数プロジェクトを混在できる設計になっています。その為、モデル名がUserであるべき所がRmsUserなどになっています。  
 
-Railsは1プロジェクト1GBメモリぐらい使用します。 ※UnicornのWorkerを1にすれば200MBぐらい。
+Railsは1プロジェクト1GBメモリぐらい使用します。 ※UnicornのWorkerを1にすれば150-300MBぐらい。
   
 [mpp_rmsの意味]  
 mpp = My Practice Project  
