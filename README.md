@@ -48,7 +48,7 @@ node_modulesフォルダ及びyarn.lockファイルを削除していますの�
 bin/rails webpacker:install  
 ```
 ### フォルダの生成
-app/assetsにimagesフォルダを生成する。※GitHubが空のディレクトを生成できない為。手動です。
+app/assetsにimagesフォルダを手動で生成する。※GitHubが空のディレクトリを生成できない為。
 
 ### CSS/JSファイルをプリコンパイルする
 ```rb  
