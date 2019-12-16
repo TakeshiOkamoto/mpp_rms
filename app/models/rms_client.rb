@@ -1,6 +1,6 @@
 class RmsClient < ApplicationRecord
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, length: { maximum: 255 }, presence: true, uniqueness: true
   validates :tel, length: { maximum: 13 } 
   validates :email, length: { maximum: 255 } 
   validates :address1, length: { maximum: 255 } 
