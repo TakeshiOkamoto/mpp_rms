@@ -1,5 +1,5 @@
 # ご依頼管理システム
-Ruby on Railsの練習用に作成したものです。 作業日数3.5日(Railsで2作目)
+Ruby on Railsの練習用に作成したものです。 作業日数3.5日(Railsで2作目)　
 
 DEMO  
 [https://www.petitmonte.com/rails-demo/rms](https://www.petitmonte.com/rails-demo/rms)  
