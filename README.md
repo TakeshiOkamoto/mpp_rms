@@ -64,6 +64,13 @@ user = RmsUser.new(name: '名前', password: 'パスワード', password_confirm
 user.save  
 exit 
 ```  
+   
+### 実行する
+```rb  
+bin/rails s
+```  
+
+[http://localhost:3000/](http://localhost:3000/)  
 
 ## 3. Rails6プロジェクトの各種初期設定
 その他は次の記事を参照してください。  
